@@ -1,0 +1,71 @@
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias grep='grep --color=auto'
+alias l.='ls -d .* --color=auto'
+alias ll='ls -l --color=auto'
+alias ls='ls --color=auto'
+alias la='ls -a --color=auto'
+alias vi='vim'
+alias xzegrep='xzegrep --color=auto'
+alias xzfgrep='xzfgrep --color=auto'
+alias xzgrep='xzgrep --color=auto'
+alias zegrep='zegrep --color=auto'
+alias zfgrep='zfgrep --color=auto'
+alias zgrep='zgrep --color=auto'
+
+MAIN_COLOR_CODE=32
+# MAIN_COLOR_CODE_1=$(expr $MAIN_COLOR_CODE + 1)
+# MAIN_COLOR_CODE_2=$(expr $MAIN_COLOR_CODE + 2)
+MAIN_COLOR_CODE_1=37
+MAIN_COLOR_CODE_2=91
+MAIN_COLOR="\[\033[38;5;${MAIN_COLOR_CODE}m\]";
+MAIN_COLOR_1="\[\033[38;5;${MAIN_COLOR_CODE_1}m\]";
+MAIN_COLOR_2="\[\033[38;5;${MAIN_COLOR_CODE_2}m\]";
+SECONDARY_COLOR="\[\033[38;5;37m\]";
+ACCENT_COLOR="\[\033[38;5;39m\]";
+ACCENT2_COLOR="\[\033[38;5;214m\]";
+TEXT_COLOR="\[\033[38;5;253m\]";
+USERNAME_COLOR_CODE=38
+DIR_COLOR_CODE=45
+TIME_COLOR_CODE=227
+GIT_COLOR_CODE=42
+PROMPT_COLOR_CODE=214
+USERNAME_COLOR="\[\033[38;5;${USERNAME_COLOR_CODE}m\]";
+BRANCH_COLOR="\[\033[38;5;${USERNAME_COLOR_CODE}m\]";
+DIR_COLOR="\[\033[38;5;${DIR_COLOR_CODE}m\]";
+TIME_COLOR="\[\033[38;5;${TIME_COLOR_CODE}m\]";
+GIT_COLOR="\[\033[38;5;${GIT_COLOR_CODE}m\]";
+PROMPT_COLOR="\[\033[38;5;${PROMPT_COLOR_CODE}m\]";
+
+PROMPT_COMMAND='gitbranch=$(git branch 2>/dev/null | grep '^*' | cut -c 2-);\
+FIRST_LINE="$BRANCH_COLOR┌───( $USERNAME_COLOR$USERNAME$USER@$HOSTNAME $BRANCH_COLOR) - $DIR_COLOR\w"; \
+SECOND_LINE="$BRANCH_COLOR│  $TIME_COLOR\d \t"; \
+LAST_LINE="$BRANCH_COLOR└─$GIT_COLOR$gitbranch$PROMPT_COLOR λ $TEXT_COLOR"; \
+PS1="\r\n${FIRST_LINE}\r\n${SECOND_LINE} \r\n${LAST_LINE}" '
+
+git() {
+   if [ $# -gt 0 ] && [ "$1" == "graph" ] ; then
+      shift
+      command git log --decorate --graph "$@"
+   elif [ $# -gt 0 ] && [ "$1" == "grapho" ] ; then
+      shift
+      command git log --decorate --graph --oneline "$@"
+   else
+      command git "$@"
+   fi
+}
+
+cdl() {
+   command cd "$1"
+   ls
+}
+
+cdll() {
+   command cd "$1"
+   ls -l --color=auto
+}
+
+toucho() {
+   command touch "$1"
+   code -r "$1"
+}
